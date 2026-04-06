@@ -16,31 +16,36 @@
 <p id="output" style="margin-top:20px;"></p>
 
 <script>
-function generate() {
+async function generate() {
   let exp = document.getElementById("experiment").value;
 
-  let output = `
-Experiment: ${exp}
+  let apiKey = "AIzaSyBVtatTtrulViRZn3s4A_qyjP4b9cDug3Q"; // 
 
-Aim:
-To perform ${exp} experiment.
+  let response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: "Explain the experiment " + exp + " with aim, materials, procedure, safety, and result."
+          }]
+        }]
+      })
+    }
+  );
 
-Materials:
-Test tubes, reagents, microscope, etc.
+  let data = await response.json();
 
-Procedure:
-1. Prepare sample
-2. Add reagents
-3. Observe results
-
-Safety:
-Wear gloves and lab coat.
-
-Expected Result:
-Successful observation of ${exp}.
-`;
-
-  document.getElementById("output").innerText = output;
+  if (data.candidates) {
+    let output = data.candidates[0].content.parts[0].text;
+    document.getElementById("output").innerText = output;
+  } else {
+    document.getElementById("output").innerText = "Error getting response";
+  }
 }
 </script>
 
