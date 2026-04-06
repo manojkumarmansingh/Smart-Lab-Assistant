@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Lab Assistant</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding: 50px;">
+
+  <h1>🧪 Smart Lab Assistant</h1>
+
+  <input id="experiment" placeholder="Enter experiment name" style="padding:10px; width:300px;">
+  <br><br>
+
+  <button onclick="generate()">Generate</button>
+
+  <p id="output" style="margin-top:20px;"></p>
+
+  <script>
+    function generate() {
+      let exp = document.getElementById("experiment").value;
+      document.getElementById("output").innerText =
+        "AI-generated explanation for: " + exp +
+        "\n\nSteps, materials, and safety guidelines will be shown here.";
+    }
+  </script>
+
+</body>
+</html>
