@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Smart Lab Assistant</title>
-</head>
-<body style="font-family: Arial; text-align: center; padding: 50px;">
+<script>
+function generate() {
+  let exp = document.getElementById("experiment").value;
 
-  <h1>🧪 Smart Lab Assistant</h1>
+  let output = `
+  Experiment: ${exp}
 
-  <input id="experiment" placeholder="Enter experiment name" style="padding:10px; width:300px;">
-  <br><br>
+  Aim:
+  To perform ${exp} experiment.
 
-  <button onclick="generate()">Generate</button>
+  Materials:
+  Test tubes, reagents, microscope, etc.
 
-  <p id="output" style="margin-top:20px;"></p>
+  Procedure:
+  1. Prepare sample
+  2. Add reagents
+  3. Observe results
 
-  <script>
-    function generate() {
-      let exp = document.getElementById("experiment").value;
-      document.getElementById("output").innerText =
-        "AI-generated explanation for: " + exp +
-        "\n\nSteps, materials, and safety guidelines will be shown here.";
-    }
-  </script>
+  Safety:
+  Wear gloves and lab coat.
 
-</body>
-</html>
+  Expected Result:
+  Successful observation of ${exp}.
+  `;
+
+  document.getElementById("output").innerText = output;
+}
+</script>
