@@ -1,11 +1,16 @@
 export default async function handler(req, res) {
+  console.log('Function called, method:', req.method);
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { message } = req.body;
+  console.log('Message received:', message);
 
   const apiKey = process.env.NVIDIA_API_KEY;
+  console.log('API key exists?', !!apiKey);
+  
   if (!apiKey) {
     return res.status(500).json({ error: 'NVIDIA_API_KEY not set' });
   }
@@ -26,6 +31,7 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    console.log('NVIDIA response status:', response.status);
 
     if (!response.ok) {
       const errorMsg = data.error?.message || 'NVIDIA API error';
