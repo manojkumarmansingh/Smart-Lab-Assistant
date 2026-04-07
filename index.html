@@ -20,6 +20,11 @@
     <button onclick="sendMessage()">Send</button>
 
     <script>
+    function sendMessage() {
+        alert("Button clicked!");
+        const input = document.getElementById('userInput');
+        alert("Input value: " + input.value);
+        }
         async function sendMessage() {
     const input = document.getElementById('userInput');
     const msg = input.value.trim();
