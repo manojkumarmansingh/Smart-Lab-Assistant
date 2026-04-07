@@ -21,30 +21,32 @@
 
     <script>
         async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const msg = input.value.trim();
-            if (!msg) return;
+    const input = document.getElementById('userInput');
+    const msg = input.value.trim();
+    if (!msg) return;
 
-            const chatDiv = document.getElementById('chat');
-            chatDiv.innerHTML += `<div class="user"><strong>You:</strong> ${msg}</div>`;
-            input.value = '';
+    const chatDiv = document.getElementById('chat');
+    chatDiv.innerHTML += `<div class="user"><strong>You:</strong> ${msg}</div>`;
+    input.value = '';
 
-            try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
-                const data = await res.json();
-                if (!res.ok) {
-                    chatDiv.innerHTML += `<div class="error"><strong>Error ${res.status}:</strong> ${data.error || 'Something went wrong'}</div>`;
-                } else {
-                    chatDiv.innerHTML += `<div class="ai"><strong>AI:</strong> ${data.reply}</div>`;
-                }
-            } catch (err) {
-                chatDiv.innerHTML += `<div class="error"><strong>Network Error:</strong> ${err.message}</div>`;
-            }
-            chatDiv.scrollTop = chatDiv.scrollHeight;
+    try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: msg })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+            // Show the error in red
+            chatDiv.innerHTML += `<div class="error"><strong>Error ${res.status}:</strong> ${data.error || 'Unknown error'}</div>`;
+        } else {
+            chatDiv.innerHTML += `<div class="ai"><strong>AI:</strong> ${data.reply}</div>`;
+        }
+    } catch (err) {
+        chatDiv.innerHTML += `<div class="error"><strong>Network Error:</strong> ${err.message}</div>`;
+    }
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+}
         }
     </script>
 </body>
