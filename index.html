@@ -8,6 +8,7 @@
         #chat { border: 1px solid #ccc; height: 400px; overflow-y: auto; padding: 1rem; margin-bottom: 1rem; background: #f9f9f9; }
         .user { text-align: right; color: blue; margin: 0.5rem 0; }
         .ai { text-align: left; color: green; margin: 0.5rem 0; }
+        .error { text-align: left; color: red; margin: 0.5rem 0; }
         input { width: 70%; padding: 0.5rem; }
         button { padding: 0.5rem 1rem; }
     </style>
@@ -28,14 +29,21 @@
             chatDiv.innerHTML += `<div class="user"><strong>You:</strong> ${msg}</div>`;
             input.value = '';
 
-            // Call the serverless function
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msg })
-            });
-            const data = await res.json();
-            chatDiv.innerHTML += `<div class="ai"><strong>AI:</strong> ${data.reply}</div>`;
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    chatDiv.innerHTML += `<div class="error"><strong>Error ${res.status}:</strong> ${data.error || 'Something went wrong'}</div>`;
+                } else {
+                    chatDiv.innerHTML += `<div class="ai"><strong>AI:</strong> ${data.reply}</div>`;
+                }
+            } catch (err) {
+                chatDiv.innerHTML += `<div class="error"><strong>Network Error:</strong> ${err.message}</div>`;
+            }
             chatDiv.scrollTop = chatDiv.scrollHeight;
         }
     </script>
