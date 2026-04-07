@@ -37,15 +37,15 @@
         });
         const data = await res.json();
         if (!res.ok) {
-            // Show the error in red
-            chatDiv.innerHTML += `<div class="error"><strong>Error ${res.status}:</strong> ${data.error || 'Unknown error'}</div>`;
+            chatDiv.innerHTML += `<div class="error"><strong>Error ${res.status}:</strong> ${data.error || 'Unknown'}</div>`;
         } else {
             chatDiv.innerHTML += `<div class="ai"><strong>AI:</strong> ${data.reply}</div>`;
         }
     } catch (err) {
-        chatDiv.innerHTML += `<div class="error"><strong>Network Error:</strong> ${err.message}</div>`;
+        chatDiv.innerHTML += `<div class="error"><strong>Send failed:</strong> ${err.message}</div>`;
     }
     chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
 }
         }
     </script>
