@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,12 +24,11 @@
             const msg = input.value.trim();
             if (!msg) return;
 
-            // display user message
             const chatDiv = document.getElementById('chat');
             chatDiv.innerHTML += `<div class="user"><strong>You:</strong> ${msg}</div>`;
             input.value = '';
 
-            // call our serverless function
+            // Call the serverless function
             const res = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -43,4 +41,3 @@
     </script>
 </body>
 </html>
-```
